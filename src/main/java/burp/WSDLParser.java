@@ -23,13 +23,16 @@ public class WSDLParser {
   public WSDLParser(IBurpExtenderCallbacks callbacks, IExtensionHelpers helpers) {
     this.helpers = helpers;
     this.callbacks = callbacks;
-    tab = new WSDLTab(callbacks);
+
   }
 
   public void parseWSDL(IHttpRequestResponse requestResponse) {
     File temp;
     temp = createTempFile(requestResponse);
-
+    if(temp == null){
+      return;
+    }
+    tab = new WSDLTab(callbacks);
     WsdlParser parser = WsdlParser.parse(temp.toURI().toString());
     temp.delete();
     List<QName> bindings = parser.getBindings();
@@ -55,13 +58,18 @@ public class WSDLParser {
   }
 
   private File createTempFile(IHttpRequestResponse requestResponse) {
+    File temp = null;
     IHttpRequestResponse response = callbacks.makeHttpRequest(requestResponse.getHttpService(), requestResponse.getRequest());
     while (response.getResponse().length < 200) {
       response = callbacks.makeHttpRequest(requestResponse.getHttpService(), requestResponse.getRequest());
     }
      int offset = helpers.analyzeResponse(response.getResponse()).getBodyOffset();
     String body = new String(response.getResponse(), offset, response.getResponse().length - offset);
-    File temp = null;
+    if(!body.contains("wsdl:definitions")){
+      System.out.println("WSDL definition not found");
+      return temp;
+    }
+
     try {
       temp = File.createTempFile("temp", ".wsdl");
       BufferedWriter bw = new BufferedWriter(new FileWriter(temp));

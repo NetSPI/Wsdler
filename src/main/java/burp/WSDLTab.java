@@ -134,7 +134,7 @@ public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorC
 
   @Override
   public String getTabCaption() {
-    return "WSDLer";
+    return "Wsdler";
   }
 
   @Override
