@@ -82,7 +82,7 @@ public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorC
       case 1:
         return "Operation";
       case 2:
-        return "Endpoint";
+        return "Port";
       default:
         return "";
     }
