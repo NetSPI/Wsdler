@@ -11,10 +11,12 @@ public class WSDLMenu implements IContextMenuFactory {
 
   private IBurpExtenderCallbacks callbacks;
   private IExtensionHelpers helpers;
+  private WSDLParserTab tab;
 
   public WSDLMenu(IBurpExtenderCallbacks callbacks) {
     this.callbacks = callbacks;
     helpers = callbacks.getHelpers();
+    tab = new WSDLParserTab(callbacks);
   }
 
   public List<JMenuItem> createMenuItems(
@@ -31,7 +33,7 @@ public class WSDLMenu implements IContextMenuFactory {
 
       @Override
       public void mousePressed(MouseEvent e) {
-        WSDLParser parser = new WSDLParser(callbacks, helpers);
+        WSDLParser parser = new WSDLParser(callbacks, helpers, tab);
         parser.parseWSDL(invocation.getSelectedMessages()[0]);
       }
 

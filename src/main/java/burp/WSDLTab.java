@@ -1,6 +1,5 @@
 package burp;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorController {
+public class WSDLTab extends AbstractTableModel implements IMessageEditorController {
 
   private final List<WSDLEntry> entries = new ArrayList<WSDLEntry>();
   public WSDLTable wsdlTable;
@@ -17,27 +16,22 @@ public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorC
   private IMessageEditor requestViewer;
   private IHttpRequestResponse currentlyDisplayedItem;
 
-  public WSDLTab(final IBurpExtenderCallbacks callbacks) {
-    callbacks.setExtensionName("WSDL Parser");
-
+  public WSDLTab(final IBurpExtenderCallbacks callbacks, JTabbedPane tabbedPane) {
     splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-
     wsdlTable = new WSDLTable(WSDLTab.this);
     rowEditor = new EachRowEditor(wsdlTable);
     JScrollPane scrollPane = new JScrollPane(wsdlTable);
+
     splitPane.setLeftComponent(scrollPane);
 
     JTabbedPane tabs = new JTabbedPane();
     requestViewer = callbacks.createMessageEditor(WSDLTab.this, false);
     tabs.addTab("Request", requestViewer.getComponent());
-    splitPane.setRightComponent(tabs);
-
-    callbacks.customizeUiComponent(splitPane);
-    callbacks.customizeUiComponent(wsdlTable);
-    callbacks.customizeUiComponent(scrollPane);
-    callbacks.customizeUiComponent(tabs);
-
-    callbacks.addSuiteTab(WSDLTab.this);
+    splitPane.setResizeWeight(0.5);
+    splitPane.setTopComponent(scrollPane);
+    splitPane.setBottomComponent(tabs);
+    tabbedPane.add(Integer.toString(WSDLParserTab.tabCount), splitPane);
+    tabbedPane.setTabComponentAt(WSDLParserTab.tabCount-WSDLParserTab.removedTabCount, new ButtonTabComponent(tabbedPane));
 
   }
 
@@ -54,14 +48,6 @@ public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorC
         wsdlTable.getColumnModel().getColumn(2).setCellEditor(rowEditor);
       }*/
     }
-  }
-
-  public JComboBox createComboBox(WSDLEntry entry) {
-    JComboBox<String> comboBox = new JComboBox<String>();
-    for (String endpoint : entry.endpoints) {
-      comboBox.addItem(endpoint);
-    }
-    return comboBox;
   }
 
   @Override
@@ -130,16 +116,6 @@ public class WSDLTab extends AbstractTableModel implements ITab, IMessageEditorC
   @Override
   public IHttpService getHttpService() {
     return currentlyDisplayedItem.getHttpService();
-  }
-
-  @Override
-  public String getTabCaption() {
-    return "Wsdler";
-  }
-
-  @Override
-  public Component getUiComponent() {
-    return splitPane;
   }
 
   private class WSDLTable extends JTable {

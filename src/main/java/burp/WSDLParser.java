@@ -1,5 +1,6 @@
 package burp;
 
+import com.centeractive.ws.SoapContext;
 import com.centeractive.ws.builder.SoapBuilder;
 import com.centeractive.ws.builder.SoapOperation;
 import com.centeractive.ws.builder.core.SoapUtils;
@@ -16,13 +17,14 @@ import javax.xml.namespace.QName;
 
 public class WSDLParser {
 
-  private WSDLTab tab;
   private IExtensionHelpers helpers;
   private IBurpExtenderCallbacks callbacks;
+  private WSDLParserTab tab;
 
-  public WSDLParser(IBurpExtenderCallbacks callbacks, IExtensionHelpers helpers) {
+  public WSDLParser(IBurpExtenderCallbacks callbacks, IExtensionHelpers helpers, WSDLParserTab tab) {
     this.helpers = helpers;
     this.callbacks = callbacks;
+    this.tab = tab;
 
   }
 
@@ -32,7 +34,7 @@ public class WSDLParser {
     if(temp == null){
       return;
     }
-    tab = new WSDLTab(callbacks);
+    WSDLTab wsdltab = tab.createTab();
     WsdlParser parser = WsdlParser.parse(temp.toURI().toString());
     temp.delete();
     List<QName> bindings = parser.getBindings();
@@ -52,7 +54,7 @@ public class WSDLParser {
         operation = builder.operation().name(operationName).find();
         xmlRequest = createRequest(requestResponse, builder, operation);
         endpoints = builder.getServiceUrls();
-        tab.addEntry(new WSDLEntry(bindingName, xmlRequest, operationName, endpoints, requestResponse));
+        wsdltab.addEntry(new WSDLEntry(bindingName, xmlRequest, operationName, endpoints, requestResponse));
       }
     }
   }
@@ -83,8 +85,10 @@ public class WSDLParser {
   }
 
   private byte[] createRequest(IHttpRequestResponse requestResponse, SoapBuilder builder, SoapOperation operation) {
+    SoapContext context = SoapContext.builder()
+        .alwaysBuildHeaders(true).exampleContent(true).typeComments(true).buildOptional(true).build();
 
-    String message = builder.buildInputMessage(operation);
+    String message = builder.buildInputMessage(operation, context);
     String endpointURL = getEndPoint(builder.getServiceUrls().get(0), requestResponse);
     BindingOperation
         soapActionOperation =
