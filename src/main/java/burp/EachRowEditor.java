@@ -32,7 +32,7 @@ class EachRowEditor implements TableCellEditor {
    * @param editor table cell editor
    */
   public void setEditorAt(int row, TableCellEditor editor) {
-    editors.put(new Integer(row), editor);
+    editors.put(row, editor);
   }
 
   public Component getTableCellEditorComponent(JTable table, Object value,

@@ -1,17 +1,20 @@
 package burp;
 
-import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
-import java.awt.*;
-import java.awt.event.*;
 
 /**
- * Component to be used as tabComponent;
- * Contains a JLabel to show the text and
- * a JButton to close the tab it belongs to
+ * Component to be used as tabComponent; Contains a JLabel to show the text and a JButton to close the tab it belongs to
  */
 public class ButtonTabComponent extends JPanel {
+
   private final JTabbedPane pane;
 
   public ButtonTabComponent(final JTabbedPane pane) {
@@ -45,6 +48,7 @@ public class ButtonTabComponent extends JPanel {
   }
 
   private class TabButton extends JButton implements ActionListener {
+
     public TabButton() {
       int size = 17;
       setPreferredSize(new Dimension(size, size));

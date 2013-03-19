@@ -140,9 +140,9 @@ public interface IExtensionHelpers {
   byte[] stringToBytes(String data);
 
   /**
-   * This method can be used to convert data from an array of bytes into String form. The conversion does not reflect any particular character set, and a byte with the representation 0xYZ will
-   * always be converted into a character with the hex representation 0x00YZ. It performs the opposite conversion to the method <code>stringToBytes()</code>, and byte-based data that is converted to
-   * a String and back again using these two methods is guaranteed to retain its integrity (which may not be the case with conversions that reflect a given character set).
+   * This method can be used to convert data from an array of bytes into String form. The conversion does not reflect any particular character set, and a byte with the representation 0xYZ will always
+   * be converted into a character with the hex representation 0x00YZ. It performs the opposite conversion to the method <code>stringToBytes()</code>, and byte-based data that is converted to a String
+   * and back again using these two methods is guaranteed to retain its integrity (which may not be the case with conversions that reflect a given character set).
    *
    * @param data The data to be converted.
    * @return The converted data.

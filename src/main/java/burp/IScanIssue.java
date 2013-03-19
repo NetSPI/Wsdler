@@ -83,8 +83,8 @@ public interface IScanIssue {
   /**
    * This method returns the HTTP messages on the basis of which the issue was generated.
    *
-   * @return The HTTP messages on the basis of which the issue was generated. <b>Note:</b> The items in this array should be instances of <code>IHttpRequestResponseWithMarkers</code> if applicable,
-   *         so that details of the relevant portions of the request and response messages are available.
+   * @return The HTTP messages on the basis of which the issue was generated. <b>Note:</b> The items in this array should be instances of <code>IHttpRequestResponseWithMarkers</code> if applicable, so
+   *         that details of the relevant portions of the request and response messages are available.
    */
   IHttpRequestResponse[] getHttpMessages();
 

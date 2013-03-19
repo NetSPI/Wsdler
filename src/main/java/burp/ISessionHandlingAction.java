@@ -27,8 +27,8 @@ public interface ISessionHandlingAction {
   /**
    * This method is invoked when the session handling action should be executed. This may happen as an action in its own right, or as a sub-action following execution of a macro.
    *
-   * @param currentRequest The base request that is currently being processed. The action can query this object to obtain details about the base request. It can issue additional requests of its own
-   *                       if necessary, and can use the setter methods on this object to update the base request.
+   * @param currentRequest The base request that is currently being processed. The action can query this object to obtain details about the base request. It can issue additional requests of its own if
+   *                       necessary, and can use the setter methods on this object to update the base request.
    * @param macroItems     If the action is invoked following execution of a macro, this parameter contains the result of executing the macro. Otherwise, it is <code>null</code>. Actions can use the
    *                       details of the macro items to perform custom analysis of the macro to derive values of non-standard session handling tokens, etc.
    */

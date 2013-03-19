@@ -22,8 +22,8 @@ public interface IHttpRequestResponseWithMarkers extends IHttpRequestResponse {
   /**
    * This method returns the details of the request markers.
    *
-   * @return A list of index pairs representing the offsets of markers for the request message. Each item in the list is an int[2] array containing the start and end offsets for the marker. The
-   *         method may return <code>null</code> if no request markers are defined.
+   * @return A list of index pairs representing the offsets of markers for the request message. Each item in the list is an int[2] array containing the start and end offsets for the marker. The method
+   *         may return <code>null</code> if no request markers are defined.
    */
   List<int[]> getRequestMarkers();
 

@@ -18,8 +18,8 @@ import java.awt.*;
 public interface IMessageEditorTab {
 
   /**
-   * This method returns the caption that should appear on the custom tab when it is displayed. <b>Note:</b> Burp invokes this method once when the tab is first generated, and the same caption will
-   * be used every time the tab is displayed.
+   * This method returns the caption that should appear on the custom tab when it is displayed. <b>Note:</b> Burp invokes this method once when the tab is first generated, and the same caption will be
+   * used every time the tab is displayed.
    *
    * @return The caption that should appear on the custom tab when it is displayed.
    */

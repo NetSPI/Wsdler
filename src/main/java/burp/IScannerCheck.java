@@ -19,8 +19,8 @@ import java.util.List;
 public interface IScannerCheck {
 
   /**
-   * The Scanner invokes this method for each base request / response that is passively scanned. <b>Note:</b> Extensions should not only analyze the HTTP messages provided during passive scanning,
-   * and should not make any new HTTP requests of their own.
+   * The Scanner invokes this method for each base request / response that is passively scanned. <b>Note:</b> Extensions should not only analyze the HTTP messages provided during passive scanning, and
+   * should not make any new HTTP requests of their own.
    *
    * @param baseRequestResponse The base HTTP request / response that should be passively scanned.
    * @return A list of <code>IScanIssue</code> objects, or <code>null</code> if no issues are identified.
@@ -29,10 +29,10 @@ public interface IScannerCheck {
 
   /**
    * The Scanner invokes this method for each insertion point that is actively scanned. Extensions may issue HTTP requests as required to carry out active scanning, and should use the
-   * <code>IScannerInsertionPoint</code> object provided to build scan requests for particular payloads. <b>Note:</b> Extensions are responsible for ensuring that attack payloads are suitably
-   * encoded within requests (for example, by URL-encoding relevant metacharacters in the URL query string). Encoding is not automatically carried out by the <code>IScannerInsertionPoint</code>,
-   * because this would prevent Scanner checks from testing for certain input filter bypasses. Extensions should query the <code>IScannerInsertionPoint</code> to determine its type, and apply any
-   * encoding that may be appropriate.
+   * <code>IScannerInsertionPoint</code> object provided to build scan requests for particular payloads. <b>Note:</b> Extensions are responsible for ensuring that attack payloads are suitably encoded
+   * within requests (for example, by URL-encoding relevant metacharacters in the URL query string). Encoding is not automatically carried out by the <code>IScannerInsertionPoint</code>, because this
+   * would prevent Scanner checks from testing for certain input filter bypasses. Extensions should query the <code>IScannerInsertionPoint</code> to determine its type, and apply any encoding that may
+   * be appropriate.
    *
    * @param baseRequestResponse The base HTTP request / response that should be actively scanned.
    * @param insertionPoint      An <code>IScannerInsertionPoint</code> object that can be queried to obtain details of the insertion point being tested, and can be used to build scan requests for

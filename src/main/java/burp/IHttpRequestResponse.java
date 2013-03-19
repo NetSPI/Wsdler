@@ -70,8 +70,7 @@ public interface IHttpRequestResponse {
   /**
    * This method is used to update the user-annotated highlight for this item.
    *
-   * @param color The highlight color to be assigned to this item. Accepted values are: red, orange, yellow, green, cyan, blue, pink, magenta, gray, or a null String to clear any existing
-   *              highlight.
+   * @param color The highlight color to be assigned to this item. Accepted values are: red, orange, yellow, green, cyan, blue, pink, magenta, gray, or a null String to clear any existing highlight.
    */
   void setHighlight(String color);
 

@@ -32,8 +32,8 @@ public interface IIntruderPayloadGenerator {
   byte[] getNextPayload(byte[] baseValue);
 
   /**
-   * This method is used by Burp to reset the state of the payload generator so that the next call to <code>getNextPayload()</code> returns the first payload again. This method will be invoked when
-   * an attack uses the same payload generator for more than one payload position, for example in a sniper attack.
+   * This method is used by Burp to reset the state of the payload generator so that the next call to <code>getNextPayload()</code> returns the first payload again. This method will be invoked when an
+   * attack uses the same payload generator for more than one payload position, for example in a sniper attack.
    */
   void reset();
 }

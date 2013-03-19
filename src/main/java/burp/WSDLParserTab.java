@@ -11,7 +11,7 @@ public class WSDLParserTab implements ITab {
   static int tabCount = 0;
   static int removedTabCount = 0;
 
-   public WSDLParserTab(final IBurpExtenderCallbacks callbacks) {
+  public WSDLParserTab(final IBurpExtenderCallbacks callbacks) {
     this.callbacks = callbacks;
     callbacks.setExtensionName("WSDL Parser");
 
@@ -23,8 +23,8 @@ public class WSDLParserTab implements ITab {
 
   }
 
-  public WSDLTab createTab(){
-    WSDLTab wsdltab = new WSDLTab((callbacks),tabs);
+  public WSDLTab createTab() {
+    WSDLTab wsdltab = new WSDLTab((callbacks), tabs);
     tabCount++;
     //tabs.addTab("test",tabs);
 

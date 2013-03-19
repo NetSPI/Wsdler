@@ -31,12 +31,16 @@ public class WSDLParser {
   public void parseWSDL(IHttpRequestResponse requestResponse) {
     File temp;
     temp = createTempFile(requestResponse);
-    if(temp == null){
+    if (temp == null) {
       return;
     }
     WSDLTab wsdltab = tab.createTab();
     WsdlParser parser = WsdlParser.parse(temp.toURI().toString());
-    temp.delete();
+    try {
+      temp.delete();
+    } catch (Exception e) {
+      System.out.println("Temp file could not be deleted");
+    }
     List<QName> bindings = parser.getBindings();
     SoapBuilder builder;
     List<SoapOperation> operations;
@@ -65,9 +69,9 @@ public class WSDLParser {
     while (response.getResponse().length < 200) {
       response = callbacks.makeHttpRequest(requestResponse.getHttpService(), requestResponse.getRequest());
     }
-     int offset = helpers.analyzeResponse(response.getResponse()).getBodyOffset();
+    int offset = helpers.analyzeResponse(response.getResponse()).getBodyOffset();
     String body = new String(response.getResponse(), offset, response.getResponse().length - offset);
-    if(!body.contains("wsdl:definitions")){
+    if (!body.contains("wsdl:definitions")) {
       System.out.println("WSDL definition not found");
       return temp;
     }
@@ -115,5 +119,4 @@ public class WSDLParser {
 
     return j;
   }
-
 }

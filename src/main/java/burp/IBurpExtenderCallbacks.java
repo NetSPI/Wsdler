@@ -99,8 +99,8 @@ public interface IBurpExtenderCallbacks {
   OutputStream getStderr();
 
   /**
-   * This method is used to register a listener which will be notified of changes to the extension's state. <b>Note:</b> Any extensions that start background threads or open system resources (such
-   * as files or database connections) should register a listener and terminate threads / close resources when the extension is unloaded.
+   * This method is used to register a listener which will be notified of changes to the extension's state. <b>Note:</b> Any extensions that start background threads or open system resources (such as
+   * files or database connections) should register a listener and terminate threads / close resources when the extension is unloaded.
    *
    * @param listener An object created by the extension that implements the <code>IExtensionStateListener</code> interface.
    */
@@ -138,8 +138,8 @@ public interface IBurpExtenderCallbacks {
   void registerScopeChangeListener(IScopeChangeListener listener);
 
   /**
-   * This method is used to register a factory for custom context menu items. When the user invokes a context menu anywhere within Burp, the factory will be passed details of the invocation event,
-   * and asked to provide any custom context menu items that should be shown.
+   * This method is used to register a factory for custom context menu items. When the user invokes a context menu anywhere within Burp, the factory will be passed details of the invocation event, and
+   * asked to provide any custom context menu items that should be shown.
    *
    * @param factory An object created by the extension that implements the <code>IContextMenuFactory</code> interface.
    */
@@ -163,16 +163,16 @@ public interface IBurpExtenderCallbacks {
       IScannerInsertionPointProvider provider);
 
   /**
-   * This method is used to register a custom Scanner check. When performing scanning, Burp will ask the check to perform active or passive scanning on the base request, and report any Scanner
-   * issues that are identified.
+   * This method is used to register a custom Scanner check. When performing scanning, Burp will ask the check to perform active or passive scanning on the base request, and report any Scanner issues
+   * that are identified.
    *
    * @param check An object created by the extension that implements the <code>IScannerCheck</code> interface.
    */
   void registerScannerCheck(IScannerCheck check);
 
   /**
-   * This method is used to register a factory for Intruder payloads. Each registered factory will be available within the Intruder UI for the user to select as the payload source for an attack.
-   * When this is selected, the factory will be asked to provide a new instance of an <code>IIntruderPayloadGenerator</code> object, which will be used to generate payloads for the attack.
+   * This method is used to register a factory for Intruder payloads. Each registered factory will be available within the Intruder UI for the user to select as the payload source for an attack. When
+   * this is selected, the factory will be asked to provide a new instance of an <code>IIntruderPayloadGenerator</code> object, which will be used to generate payloads for the attack.
    *
    * @param factory An object created by the extension that implements the <code>IIntruderPayloadGeneratorFactory</code> interface.
    */
@@ -230,8 +230,8 @@ public interface IBurpExtenderCallbacks {
                                      boolean editable);
 
   /**
-   * This method is used to save configuration settings for the extension in a persistent way that survives reloads of the extension and of Burp Suite. Saved settings can be retrieved using the
-   * method <code>loadExtensionSetting()</code>.
+   * This method is used to save configuration settings for the extension in a persistent way that survives reloads of the extension and of Burp Suite. Saved settings can be retrieved using the method
+   * <code>loadExtensionSetting()</code>.
    *
    * @param name  The name of the setting.
    * @param value The value of the setting. If this value is <code>null</code> then any existing setting with the specified name will be removed.
@@ -312,8 +312,8 @@ public interface IBurpExtenderCallbacks {
       java.net.URL url);
 
   /**
-   * This method can be used to send an HTTP request to the Burp Scanner tool to perform an active vulnerability scan. If the request is not within the current active scanning scope, the user will
-   * be asked if they wish to proceed with the scan.
+   * This method can be used to send an HTTP request to the Burp Scanner tool to perform an active vulnerability scan. If the request is not within the current active scanning scope, the user will be
+   * asked if they wish to proceed with the scan.
    *
    * @param host     The hostname of the remote HTTP server.
    * @param port     The port of the remote HTTP server.
@@ -328,8 +328,8 @@ public interface IBurpExtenderCallbacks {
       byte[] request);
 
   /**
-   * This method can be used to send an HTTP request to the Burp Scanner tool to perform an active vulnerability scan, based on a custom list of insertion points that are to be scanned. If the
-   * request is not within the current active scanning scope, the user will be asked if they wish to proceed with the scan.
+   * This method can be used to send an HTTP request to the Burp Scanner tool to perform an active vulnerability scan, based on a custom list of insertion points that are to be scanned. If the request
+   * is not within the current active scanning scope, the user will be asked if they wish to proceed with the scan.
    *
    * @param host                  The hostname of the remote HTTP server.
    * @param port                  The port of the remote HTTP server.
@@ -442,8 +442,8 @@ public interface IBurpExtenderCallbacks {
   IScanIssue[] getScanIssues(String urlPrefix);
 
   /**
-   * This method is used to retrieve the contents of Burp's session handling cookie jar. Extensions that provide an <code>ISessionHandlingAction</code> can query and update the cookie jar in order
-   * to handle unusual session handling mechanisms.
+   * This method is used to retrieve the contents of Burp's session handling cookie jar. Extensions that provide an <code>ISessionHandlingAction</code> can query and update the cookie jar in order to
+   * handle unusual session handling mechanisms.
    *
    * @return A list of <code>ICookie</code> objects representing the contents of Burp's session handling cookie jar.
    */
@@ -490,8 +490,8 @@ public interface IBurpExtenderCallbacks {
 
   /**
    * This method causes Burp to load a new configuration from the Map of name/value Strings provided. Any settings not specified in the Map will be restored to their default values. To selectively
-   * update only some settings and leave the rest unchanged, you should first call <code>saveConfig()</code> to obtain Burp's current configuration, modify the relevant items in the Map, and then
-   * call <code>loadConfig()</code> with the same Map.
+   * update only some settings and leave the rest unchanged, you should first call <code>saveConfig()</code> to obtain Burp's current configuration, modify the relevant items in the Map, and then call
+   * <code>loadConfig()</code> with the same Map.
    *
    * @param config A map of name/value Strings to use as Burp's new configuration.
    */
@@ -505,8 +505,8 @@ public interface IBurpExtenderCallbacks {
   void setProxyInterceptionEnabled(boolean enabled);
 
   /**
-   * This method retrieves information about the version of Burp in which the extension is running. It can be used by extensions to dynamically adjust their behavior depending on the functionality
-   * and APIs supported by the current version.
+   * This method retrieves information about the version of Burp in which the extension is running. It can be used by extensions to dynamically adjust their behavior depending on the functionality and
+   * APIs supported by the current version.
    *
    * @return An array of Strings comprised of: the product name (e.g. Burp Suite Professional), the major version (e.g. 1.5), the minor version (e.g. 03)
    */
@@ -529,8 +529,8 @@ public interface IBurpExtenderCallbacks {
   ITempFile saveToTempFile(byte[] buffer);
 
   /**
-   * This method is used to save the request and response of an <code>IHttpRequestResponse</code> object to temporary files, so that they are no longer held in memory. Extensions can used this
-   * method to convert <code>IHttpRequestResponse</code> objects into a form suitable for long-term storage.
+   * This method is used to save the request and response of an <code>IHttpRequestResponse</code> object to temporary files, so that they are no longer held in memory. Extensions can used this method
+   * to convert <code>IHttpRequestResponse</code> objects into a form suitable for long-term storage.
    *
    * @param httpRequestResponse The <code>IHttpRequestResponse</code> object whose request and response messages are to be saved to temporary files.
    * @return An object that implements the <code>IHttpRequestResponsePersisted</code> interface.
@@ -545,8 +545,8 @@ public interface IBurpExtenderCallbacks {
    * @param httpRequestResponse The <code>IHttpRequestResponse</code> object to which the markers should be applied.
    * @param requestMarkers      A list of index pairs representing the offsets of markers to be applied to the request message. Each item in the list must be an int[2] array containing the start and
    *                            end offsets for the marker. This parameter is optional and may be <code>null</code> if no request markers are required.
-   * @param responseMarkers     A list of index pairs representing the offsets of markers to be applied to the response message. Each item in the list must be an int[2] array containing the start
-   *                            and end offsets for the marker. This parameter is optional and may be <code>null</code> if no response markers are required.
+   * @param responseMarkers     A list of index pairs representing the offsets of markers to be applied to the response message. Each item in the list must be an int[2] array containing the start and
+   *                            end offsets for the marker. This parameter is optional and may be <code>null</code> if no response markers are required.
    * @return An object that implements the <code>IHttpRequestResponseWithMarkers</code> interface.
    */
   IHttpRequestResponseWithMarkers applyMarkers(
@@ -563,9 +563,9 @@ public interface IBurpExtenderCallbacks {
   String getToolName(int toolFlag);
 
   /**
-   * This method is used to register a new Scanner issue. <b>Note:</b> Wherever possible, extensions should implement custom Scanner checks using <code>IScannerCheck</code> and report issues via
-   * those checks, so as to integrate with Burp's user-driven workflow, and ensure proper consolidation of duplicate reported issues. This method is only designed for tasks outside of the normal
-   * testing workflow, such as importing results from other scanning tools.
+   * This method is used to register a new Scanner issue. <b>Note:</b> Wherever possible, extensions should implement custom Scanner checks using <code>IScannerCheck</code> and report issues via those
+   * checks, so as to integrate with Burp's user-driven workflow, and ensure proper consolidation of duplicate reported issues. This method is only designed for tasks outside of the normal testing
+   * workflow, such as importing results from other scanning tools.
    *
    * @param issue An object created by the extension that implements the <code>IScanIssue</code> interface.
    */
