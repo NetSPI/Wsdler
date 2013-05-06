@@ -30,7 +30,6 @@ public class WSDLMenu implements IContextMenuFactory {
       public void mouseClicked(MouseEvent e) {
 
       }
-
       @Override
       public void mousePressed(MouseEvent e) {
         WSDLParser parser = new WSDLParser(callbacks, helpers, tab);
