@@ -71,7 +71,7 @@ public class WSDLParser {
     }
     int offset = helpers.analyzeResponse(response.getResponse()).getBodyOffset();
     String body = new String(response.getResponse(), offset, response.getResponse().length - offset);
-    if (!body.contains("wsdl:definitions")) {
+    if (!body.contains("definitions")) {
       System.out.println("WSDL definition not found");
       return temp;
     }
