@@ -121,12 +121,17 @@ public class WSDLParser {
         headers.remove(0);
         headers.add(0, "POST " + endpointURL + " HTTP/1.1");
         Iterator<String> iter = headers.iterator();
+        String i;
         while (iter.hasNext()) {
-            if (iter.next().contains("Host:")) {
+            i = iter.next();
+            if (i.contains("Host:")) {
                 iter.remove();
-
+            }
+            if (i.contains("Content-Type:")) {
+                iter.remove();
             }
         }
+        headers.add("Content-Type: application/xml;charset=UTF-8");
         headers.add("Host: " + host);
         //headers.add("SOAPAction: " + SoapUtils.getSOAPActionUri(soapActionOperation));
 
