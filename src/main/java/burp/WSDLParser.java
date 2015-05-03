@@ -131,7 +131,7 @@ public class WSDLParser {
                 iter.remove();
             }
         }
-        headers.add("Content-Type: application/xml;charset=UTF-8");
+        headers.add("Content-Type: text/xml;charset=UTF-8");
         headers.add("Host: " + host);
         //headers.add("SOAPAction: " + SoapUtils.getSOAPActionUri(soapActionOperation));
 
