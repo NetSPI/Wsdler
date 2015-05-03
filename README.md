@@ -19,7 +19,7 @@ The Wsdler tab should populate with the SOAP requests
 
 (Older) Blog detailing how to use the Wsdler Plugin:
 
-https://www.netspi.com/blog/entryid/57/hacking-web-services-with-burp
+https://blog.netspi.com/hacking-web-services-with-burp/
 
 How To Compile
 ==============
