@@ -9,15 +9,17 @@ package burp;
  * and Burp Suite Professional, provided that this usage does not violate the
  * license terms for those products.
  */
-
 /**
- * This interface is used for an <code>IHttpRequestResponse</code> object whose request and response messages have been saved to temporary files using
+ * This interface is used for an
+ * <code>IHttpRequestResponse</code> object whose request and response messages
+ * have been saved to temporary files using
  * <code>IBurpExtenderCallbacks.saveBuffersToTempFiles()</code>.
  */
-public interface IHttpRequestResponsePersisted extends IHttpRequestResponse {
-
-  /**
-   * This method is used to permanently delete the saved temporary files. It will no longer be possible to retrieve the request or response for this item.
-   */
-  void deleteTempFiles();
+public interface IHttpRequestResponsePersisted extends IHttpRequestResponse
+{
+    /**
+     * This method is deprecated and no longer performs any action.
+     */
+    @Deprecated
+    void deleteTempFiles();
 }

@@ -9,21 +9,25 @@ package burp;
  * and Burp Suite Professional, provided that this usage does not violate the
  * license terms for those products.
  */
-
 /**
- * This interface is used to hold details of a temporary file that has been created via a call to <code>IBurpExtenderCallbacks.saveToTempFile()</code>.
+ * This interface is used to hold details of a temporary file that has been
+ * created via a call to
+ * <code>IBurpExtenderCallbacks.saveToTempFile()</code>.
+ *
  */
-public interface ITempFile {
+public interface ITempFile
+{
+    /**
+     * This method is used to retrieve the contents of the buffer that was saved
+     * in the temporary file.
+     *
+     * @return The contents of the buffer that was saved in the temporary file.
+     */
+    byte[] getBuffer();
 
-  /**
-   * This method is used to retrieve the contents of the buffer that was saved in the temporary file.
-   *
-   * @return The contents of the buffer that was saved in the temporary file.
-   */
-  byte[] getBuffer();
-
-  /**
-   * This method is used to permanently delete the temporary file when it is no longer required.
-   */
-  void delete();
+    /**
+     * This method is deprecated and no longer performs any action.
+     */
+    @Deprecated
+    void delete();
 }

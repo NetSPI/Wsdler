@@ -6,38 +6,40 @@ import javax.swing.*;
 
 public class WSDLParserTab implements ITab {
 
-  JTabbedPane tabs;
-  private IBurpExtenderCallbacks callbacks;
-  static int tabCount = 0;
-  static int removedTabCount = 0;
+    JTabbedPane tabs;
+    private IBurpExtenderCallbacks callbacks;
+    static int tabCount = 0;
+    static int removedTabCount = 0;
 
-  public WSDLParserTab(final IBurpExtenderCallbacks callbacks) {
-    this.callbacks = callbacks;
-    callbacks.setExtensionName("WSDL Parser");
+    public WSDLParserTab(final IBurpExtenderCallbacks callbacks) {
+        this.callbacks = callbacks;
 
-    tabs = new JTabbedPane();
+        tabs = new JTabbedPane();
 
-    callbacks.customizeUiComponent(tabs);
+        callbacks.customizeUiComponent(tabs);
 
-    callbacks.addSuiteTab(WSDLParserTab.this);
+        callbacks.addSuiteTab(WSDLParserTab.this);
 
-  }
+    }
 
-  public WSDLTab createTab() {
-    WSDLTab wsdltab = new WSDLTab((callbacks), tabs);
-    tabCount++;
-    //tabs.addTab("test",tabs);
+    public WSDLTab createTab() {
 
-    return wsdltab;
-  }
+        WSDLTab wsdltab = new WSDLTab((callbacks), tabs);
+        tabs.setSelectedIndex(tabCount - removedTabCount);
+        tabCount++;
 
-  @Override
-  public String getTabCaption() {
-    return "Wsdler";
-  }
+        return wsdltab;
+    }
 
-  @Override
-  public Component getUiComponent() {
-    return tabs;
-  }
+    @Override
+    public String getTabCaption() {
+        return "Wsdler";
+    }
+
+    @Override
+    public Component getUiComponent() {
+        return tabs;
+    }
+
+
 }

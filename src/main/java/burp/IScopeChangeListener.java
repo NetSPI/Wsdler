@@ -9,15 +9,17 @@ package burp;
  * and Burp Suite Professional, provided that this usage does not violate the
  * license terms for those products.
  */
-
 /**
- * Extensions can implement this interface and then call <code>IBurpExtenderCallbacks.registerScopeChangeListener()</code> to register a scope change listener. The listener will be notified whenever a
- * change occurs to Burp's suite-wide target scope.
+ * Extensions can implement this interface and then call
+ * <code>IBurpExtenderCallbacks.registerScopeChangeListener()</code> to register
+ * a scope change listener. The listener will be notified whenever a change
+ * occurs to Burp's suite-wide target scope.
  */
-public interface IScopeChangeListener {
-
-  /**
-   * This method is invoked whenever a change occurs to Burp's suite-wide target scope.
-   */
-  void scopeChanged();
+public interface IScopeChangeListener
+{
+    /**
+     * This method is invoked whenever a change occurs to Burp's suite-wide
+     * target scope.
+     */
+    void scopeChanged();
 }
