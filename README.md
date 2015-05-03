@@ -5,7 +5,11 @@ WSDL Parser extension for Burp
 
 How to Run
 
-java -classpath Wsdler.jar;burp.jar burp.StartBurp
+Add jar file to Burp through Burp extender.
+
+Right-click on WSDL request and select Parse WSDL
+
+The Wsdler tab should populate with the SOAP requests
 
 Blog detailng how to use the Wsdler Plugin:
 
