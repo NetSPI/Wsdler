@@ -17,7 +17,7 @@ The Wsdler tab should populate with the SOAP requests
 
 ![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624761-83fe6f80d8d373113cced26ab6c0714b.png)
 
-(Older) Blog detailng how to use the Wsdler Plugin:
+(Older) Blog detailing how to use the Wsdler Plugin:
 
 https://www.netspi.com/blog/entryid/57/hacking-web-services-with-burp
 
