@@ -40,7 +40,7 @@ class FileWriter {
      * @throws java.io.IOException
      * @throws Exception
      */
-    public File createClassFile(File rootLocation, String packageName, String fileName, String extension) throws IOException,
+    public File createClassFile(File rootLocation, String packageName, String fileName, String extension) throws
             Exception {
         File returnFile = null;
         File root = rootLocation;

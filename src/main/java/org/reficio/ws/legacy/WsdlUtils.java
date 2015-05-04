@@ -458,9 +458,9 @@ class WsdlUtils {
      */
 
     public interface SoapHeader {
-        public QName getMessage();
+        QName getMessage();
 
-        public String getPart();
+        String getPart();
     }
 
     /**

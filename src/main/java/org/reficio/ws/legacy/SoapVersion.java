@@ -52,28 +52,28 @@ import java.util.List;
  * @author ole.matzura
  */
 interface SoapVersion {
-    public static final SoapVersion11 Soap11 = SoapVersion11.instance;
-    public static final SoapVersion12 Soap12 = SoapVersion12.instance;
+    SoapVersion11 Soap11 = SoapVersion11.instance;
+    SoapVersion12 Soap12 = SoapVersion12.instance;
 
-    public QName getEnvelopeQName();
+    QName getEnvelopeQName();
 
-    public QName getBodyQName();
+    QName getBodyQName();
 
-    public QName getHeaderQName();
+    QName getHeaderQName();
 
-    public void validateSoapEnvelope(String soapMessage, List<XmlError> errors);
+    void validateSoapEnvelope(String soapMessage, List<XmlError> errors);
 
-    public String getContentTypeHttpHeader(String encoding, String soapAction);
+    String getContentTypeHttpHeader(String encoding, String soapAction);
 
-    public String getEnvelopeNamespace();
+    String getEnvelopeNamespace();
 
-    public String getFaultDetailNamespace();
+    String getFaultDetailNamespace();
 
-    public String getEncodingNamespace();
+    String getEncodingNamespace();
 
-    public XmlObject getSoapEncodingSchema() throws XmlException, IOException;
+    XmlObject getSoapEncodingSchema() throws XmlException, IOException;
 
-    public XmlObject getSoapEnvelopeSchema() throws XmlException, IOException;
+    XmlObject getSoapEnvelopeSchema() throws XmlException, IOException;
 
     /**
      * Checks if the specified validation error should be ignored for a message
@@ -81,15 +81,15 @@ interface SoapVersion {
      * allowed by the corresponding XML-Schema)
      */
 
-    public boolean shouldIgnore(XmlValidationError xmlError);
+    boolean shouldIgnore(XmlValidationError xmlError);
 
-    public String getContentType();
+    String getContentType();
 
-    public SchemaType getEnvelopeType();
+    SchemaType getEnvelopeType();
 
-    public SchemaType getFaultType();
+    SchemaType getFaultType();
 
-    public String getName();
+    String getName();
 
     /**
      * Utilities
@@ -97,7 +97,7 @@ interface SoapVersion {
      * @author ole.matzura
      */
 
-    public static class Utils {
+    class Utils {
         public static SoapVersion getSoapVersionForContentType(String contentType, SoapVersion def) {
             if (StringUtils.isBlank(contentType))
                 return def;
@@ -111,5 +111,5 @@ interface SoapVersion {
         }
     }
 
-    public String getSoapActionHeader(String soapAction);
+    String getSoapActionHeader(String soapAction);
 }

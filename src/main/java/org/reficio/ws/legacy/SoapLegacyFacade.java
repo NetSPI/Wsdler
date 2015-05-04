@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class SoapLegacyFacade {
 
-    public static enum Soap {SOAP_1_1, SOAP_1_2}
+    public enum Soap {SOAP_1_1, SOAP_1_2}
 
     private static final String RPC = "rpc";
 
