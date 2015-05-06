@@ -22,9 +22,9 @@ public class WSDLParserTab implements ITab {
 
     }
 
-    public WSDLTab createTab() {
+    public WSDLTab createTab(String request) {
 
-        WSDLTab wsdltab = new WSDLTab((callbacks), tabs);
+        WSDLTab wsdltab = new WSDLTab((callbacks), tabs, request);
         tabs.setSelectedIndex(tabCount - removedTabCount);
         tabCount++;
 

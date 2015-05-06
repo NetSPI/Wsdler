@@ -38,7 +38,7 @@ public class Menu implements IContextMenuFactory {
             public void mousePressed(MouseEvent e) {
                 WSDLParser parser = new WSDLParser(helpers, tab);
                 try {
-                    new GuiWorker(parser,invocation, tab, callbacks).execute();
+                    new Worker(parser,invocation, tab, callbacks).execute();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -66,7 +66,7 @@ public class Menu implements IContextMenuFactory {
 
 }
 
-class GuiWorker extends SwingWorker<Void,Void> {
+class Worker extends SwingWorker<Void,Void> {
 
     private JDialog dialog = new JDialog();
     private JProgressBar progressBar = new JProgressBar();
@@ -76,13 +76,13 @@ class GuiWorker extends SwingWorker<Void,Void> {
     private IBurpExtenderCallbacks callbacks;
     private int status;
 
-    public GuiWorker(WSDLParser parser, IContextMenuInvocation invocation, WSDLParserTab tab, IBurpExtenderCallbacks callbacks) {
+    public Worker(WSDLParser parser, IContextMenuInvocation invocation, WSDLParserTab tab, IBurpExtenderCallbacks callbacks) {
         progressBar.setString("Parsing WSDL");
         progressBar.setStringPainted(true);
         progressBar.setIndeterminate(true);
         dialog.getContentPane().add(progressBar);
         dialog.pack();
-        dialog.setLocationRelativeTo(dialog.getParent());
+        dialog.setLocationRelativeTo(tab.getUiComponent().getParent());
         dialog.setModal(false);
         dialog.setVisible(true);
         this.parser = parser;
@@ -106,6 +106,8 @@ class GuiWorker extends SwingWorker<Void,Void> {
 
         } else if(status == -2){
             JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Not a WSDL");
+        } else if(status == -3){
+            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Can't Parse WSDL");
         }
         else {
             final JTabbedPane parent = (JTabbedPane) tab.getUiComponent().getParent();

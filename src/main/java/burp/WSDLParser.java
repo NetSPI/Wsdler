@@ -43,6 +43,11 @@ public class WSDLParser {
 
         IResponseInfo responseInfo = helpers.analyzeResponse(response);
 
+        if (!responseInfo.getStatedMimeType().contains("XML")){
+            return -2;
+
+        }
+
         int bodyOffset = responseInfo.getBodyOffset();
 
         String body = new String(response, bodyOffset, response.length - bodyOffset);
@@ -52,11 +57,26 @@ public class WSDLParser {
             return -2;
         }
 
-        Wsdl parser = Wsdl.parse(temp.toURI().toString());
+        IRequestInfo request = helpers.analyzeRequest(requestResponse);
+
+        String url = request.getUrl().toString();
+
+        String requestName = url.substring(url.lastIndexOf("/") + 1);
+
+        if (requestName.contains(".")){
+            requestName = requestName.substring(0,requestName.indexOf("."));
+        }
+        Wsdl parser;
+        try {
+            parser = Wsdl.parse(temp.toURI().toString());
+        } catch (Exception e){
+            return -3;
+        }
         if (!temp.delete()){
             System.out.println("Can't delete temp file");
         }
-        WSDLTab wsdltab = tab.createTab();
+
+        WSDLTab wsdltab = tab.createTab(requestName);
         List<QName> bindings = parser.getBindings();
         SoapBuilder builder;
         List<SoapOperation> operations;
@@ -93,10 +113,8 @@ public class WSDLParser {
     private File createTempFile(String body) {
         File temp = null;
         if (!body.contains("definitions")) {
-            System.out.println("WSDL definition not found");
             return null;
         }
-
         try {
             temp = File.createTempFile("temp", ".wsdl");
             BufferedWriter bw = new BufferedWriter(new FileWriter(temp));

@@ -18,7 +18,7 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
     JSplitPane splitPane;
     JTabbedPane tabbedPane;
 
-    public WSDLTab(final IBurpExtenderCallbacks callbacks, JTabbedPane tabbedPane) {
+    public WSDLTab(final IBurpExtenderCallbacks callbacks, JTabbedPane tabbedPane, String request) {
         this.tabbedPane = tabbedPane;
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         wsdlTable = new WSDLTable(WSDLTab.this);
@@ -32,7 +32,7 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
         tabs.addTab("Request", requestViewer.getComponent());
         splitPane.setTopComponent(scrollPane);
         splitPane.setBottomComponent(tabs);
-        tabbedPane.add(Integer.toString(WSDLParserTab.tabCount), splitPane);
+        tabbedPane.add(request, splitPane);
         tabbedPane.setTabComponentAt(WSDLParserTab.tabCount - WSDLParserTab.removedTabCount, new ButtonTabComponent(tabbedPane));
 
     }
