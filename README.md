@@ -5,17 +5,19 @@ WSDL Parser extension for Burp
 
 ###How to Run###
 
-Add jar file to Burp through Burp extender.
+1. Download latest jar from the releases (https://github.com/NetSPI/Wsdler/releases) or clone the repo and compile it.
 
-![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624756-458a48eb0a789e8805d2e25fbb8b1b77-1024x514.png)
+2. Add jar file to Burp through Burp extender.
 
-Right-click on WSDL request and select Parse WSDL
+  ![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624756-458a48eb0a789e8805d2e25fbb8b1b77-1024x514.png)
 
-![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624759-035d370fd48f0d9a8c8326a78fccb714.png)
+3. Right-click on WSDL request and select Parse WSDL
 
-The Wsdler tab should populate with the SOAP requests
+  ![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624759-035d370fd48f0d9a8c8326a78fccb714.png)
 
-![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624761-83fe6f80d8d373113cced26ab6c0714b.png)
+4. The Wsdler tab should populate with the SOAP requests
+
+  ![alt tag](https://blog.netspi.com/wp-content/uploads/2015/05/1430624761-83fe6f80d8d373113cced26ab6c0714b.png)
 
 (Older) Blog detailing how to use the Wsdler Plugin:
 
