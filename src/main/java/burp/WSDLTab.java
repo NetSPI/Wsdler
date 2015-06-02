@@ -22,7 +22,9 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
         this.tabbedPane = tabbedPane;
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         wsdlTable = new WSDLTable(WSDLTab.this);
-        rowEditor = new EachRowEditor(wsdlTable);
+        wsdlTable.setAutoCreateRowSorter(true);
+
+                rowEditor = new EachRowEditor(wsdlTable);
         JScrollPane scrollPane = new JScrollPane(wsdlTable);
 
         splitPane.setLeftComponent(scrollPane);
@@ -78,6 +80,7 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+
         WSDLEntry wsdlEntry = entries.get(rowIndex);
 
         switch (columnIndex) {
@@ -115,13 +118,12 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
 
         public WSDLTable(TableModel tableModel) {
             super(tableModel);
-
         }
 
         @Override
         public void changeSelection(int row, int col, boolean toggle, boolean extend) {
 
-            WSDLEntry wsdlEntry = entries.get(row);
+            WSDLEntry wsdlEntry = entries.get(super.convertRowIndexToModel(row));
             requestViewer.setMessage(wsdlEntry.request, true);
             currentlyDisplayedItem = wsdlEntry.requestResponse;
             super.changeSelection(row, col, toggle, extend);
