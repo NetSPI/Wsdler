@@ -66,6 +66,9 @@ public class WSDLParser {
         if (requestName.contains(".")){
             requestName = requestName.substring(0,requestName.indexOf("."));
         }
+        if (requestName.contains("?")){
+            requestName = requestName.substring(0,requestName.indexOf("?"));
+        }
         Wsdl parser;
         try {
             parser = Wsdl.parse(temp.toURI().toString());
