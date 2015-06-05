@@ -49,17 +49,14 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
         }
     }
 
-    @Override
     public int getRowCount() {
         return entries.size();
     }
 
-    @Override
     public int getColumnCount() {
         return 3;
     }
 
-    @Override
     public String getColumnName(int columnIndex) {
         switch (columnIndex) {
             case 0:
@@ -73,12 +70,10 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
         }
     }
 
-    @Override
     public Class getColumnClass(int columnIndex) {
         return getValueAt(0, columnIndex).getClass();
     }
 
-    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
 
         WSDLEntry wsdlEntry = entries.get(rowIndex);
@@ -99,17 +94,14 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
         return col >= 2;
     }
 
-    @Override
     public byte[] getRequest() {
         return currentlyDisplayedItem.getRequest();
     }
 
-    @Override
     public byte[] getResponse() {
         return currentlyDisplayedItem.getResponse();
     }
 
-    @Override
     public IHttpService getHttpService() {
         return currentlyDisplayedItem.getHttpService();
     }
@@ -120,7 +112,6 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
             super(tableModel);
         }
 
-        @Override
         public void changeSelection(int row, int col, boolean toggle, boolean extend) {
 
             WSDLEntry wsdlEntry = entries.get(super.convertRowIndexToModel(row));
@@ -131,7 +122,6 @@ public class WSDLTab extends AbstractTableModel implements IMessageEditorControl
 
         private boolean painted;
 
-        @Override
         public void paint(Graphics g) {
             super.paint(g);
 

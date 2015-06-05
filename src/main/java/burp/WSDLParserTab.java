@@ -31,12 +31,10 @@ public class WSDLParserTab implements ITab {
         return wsdltab;
     }
 
-    @Override
     public String getTabCaption() {
         return "Wsdler";
     }
 
-    @Override
     public Component getUiComponent() {
         return tabs;
     }

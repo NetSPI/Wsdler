@@ -205,10 +205,6 @@ class SampleXmlUtil {
         }
 
         SchemaType primitiveType = sType.getPrimitiveType();
-        if (primitiveType != null
-                && (primitiveType.getBuiltinTypeCode() == SchemaType.BTC_BASE_64_BINARY || primitiveType
-                .getBuiltinTypeCode() == SchemaType.BTC_HEX_BINARY))
-            return "cid:" + (long) (System.currentTimeMillis() * Math.random());
 
         // if( sType != null )
         if (!exampleContent)

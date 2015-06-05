@@ -26,6 +26,10 @@ public class Menu implements IContextMenuFactory {
             final IContextMenuInvocation invocation) {
         List<JMenuItem> list;
         list = new ArrayList<JMenuItem>();
+
+        if (invocation.getInvocationContext() != IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST && invocation.getInvocationContext() != IContextMenuInvocation.CONTEXT_MESSAGE_VIEWER_REQUEST){
+            return list;
+        }
         JMenuItem item = new JMenuItem("Parse WSDL");
 
         item.addMouseListener(new MouseListener() {
@@ -36,16 +40,17 @@ public class Menu implements IContextMenuFactory {
 
 
             public void mousePressed(MouseEvent e) {
+
+            }
+
+
+            public void mouseReleased(MouseEvent e) {
                 WSDLParser parser = new WSDLParser(helpers, tab);
                 try {
                     new Worker(parser,invocation, tab, callbacks).execute();
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
-            }
-
-
-            public void mouseReleased(MouseEvent e) {
 
             }
 
@@ -69,7 +74,6 @@ public class Menu implements IContextMenuFactory {
 class Worker extends SwingWorker<Void,Void> {
 
     private JDialog dialog = new JDialog();
-    private JProgressBar progressBar = new JProgressBar();
     private WSDLParser parser;
     private IContextMenuInvocation invocation;
     private WSDLParserTab tab;
@@ -77,6 +81,7 @@ class Worker extends SwingWorker<Void,Void> {
     private int status;
 
     public Worker(WSDLParser parser, IContextMenuInvocation invocation, WSDLParserTab tab, IBurpExtenderCallbacks callbacks) {
+        JProgressBar progressBar = new JProgressBar();
         progressBar.setString("Parsing WSDL");
         progressBar.setStringPainted(true);
         progressBar.setIndeterminate(true);
@@ -101,9 +106,7 @@ class Worker extends SwingWorker<Void,Void> {
     protected void done() {
         dialog.dispose();
         if (status == -1) {
-
             JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Can't Read Response");
-
         } else if(status == -2){
             JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Not a WSDL");
         } else if(status == -3){

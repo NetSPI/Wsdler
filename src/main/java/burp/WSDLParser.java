@@ -100,7 +100,6 @@ public class WSDLParser {
                     xmlRequest = createRequest(requestResponse, builder, operation);
                 } catch (Exception e) {
                     success = false;
-
                 }
                 if (success) {
                     endpoints = builder.getServiceUrls();
@@ -132,7 +131,7 @@ public class WSDLParser {
 
     private byte[] createRequest(IHttpRequestResponse requestResponse, SoapBuilder builder, SoapOperation operation) {
         SoapContext context = SoapContext.builder()
-                .alwaysBuildHeaders(true).exampleContent(false).typeComments(true).buildOptional(true).build();
+                .alwaysBuildHeaders(true).exampleContent(true).typeComments(true).buildOptional(true).build();
         String message = builder.buildInputMessage(operation, context);
         String host = getHost(builder.getServiceUrls().get(0));
         String endpointURL = getEndPoint(builder.getServiceUrls().get(0), host);
