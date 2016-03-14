@@ -27,9 +27,7 @@ public class Menu implements IContextMenuFactory {
         List<JMenuItem> list;
         list = new ArrayList<JMenuItem>();
 
-        if (invocation.getInvocationContext() != IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST && invocation.getInvocationContext() != IContextMenuInvocation.CONTEXT_MESSAGE_VIEWER_REQUEST){
-            return list;
-        }
+
         JMenuItem item = new JMenuItem("Parse WSDL");
 
         item.addMouseListener(new MouseListener() {
