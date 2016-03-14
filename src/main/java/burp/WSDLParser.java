@@ -80,14 +80,12 @@ public class WSDLParser {
         }
 
         WSDLTab wsdltab = tab.createTab(requestName);
-        List<QName> bindings = null;
+        List<QName> bindings;
         try {
             bindings = parser.getBindings();
-            System.out.println(bindings);
         } catch (Exception e){
             return -2;
         }
-        System.out.println(bindings);
         SoapBuilder builder;
         List<SoapOperation> operations;
         SoapOperation operation;
@@ -115,7 +113,6 @@ public class WSDLParser {
 
             }
         }
-        System.out.println(bindings);
         return 0;
     }
 
