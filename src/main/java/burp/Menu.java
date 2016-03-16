@@ -96,33 +96,27 @@ class Worker extends SwingWorker<Void,Void> {
 
     @Override
     protected Void doInBackground() throws Exception {
-        status = parser.parseWSDL(invocation.getSelectedMessages()[0],callbacks);
+        status = parser.parseWSDL(invocation.getSelectedMessages()[0], callbacks);
         return null;
     }
 
     @Override
     protected void done() {
         dialog.dispose();
-        if (status == -1) {
-            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Can't Read Response");
-        } else if(status == -2){
-            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Not a WSDL");
-        } else if(status == -3){
-            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Error: Can't Parse WSDL");
-        }
-        else {
-            final JTabbedPane parent = (JTabbedPane) tab.getUiComponent().getParent();
-            final int index = parent.indexOfComponent(tab.getUiComponent());
-            parent.setBackgroundAt(index, new Color(229, 137, 1));
+        if (status != -1 && status != -2 && status != -3) {
+            {
+                final JTabbedPane parent = (JTabbedPane) tab.getUiComponent().getParent();
+                final int index = parent.indexOfComponent(tab.getUiComponent());
+                parent.setBackgroundAt(index, new Color(229, 137, 1));
 
-            Menu.timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    parent.setBackgroundAt(index, new Color(0, 0, 0));
-                }
-            }, 5000);
+                Menu.timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        parent.setBackgroundAt(index, new Color(0, 0, 0));
+                    }
+                }, 5000);
 
+            }
         }
     }
-
 }

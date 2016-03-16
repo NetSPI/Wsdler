@@ -6,9 +6,12 @@ import org.reficio.ws.builder.SoapOperation;
 import org.reficio.ws.builder.core.Wsdl;
 import org.xml.sax.SAXException;
 
+import javax.swing.*;
+import javax.swing.ScrollPaneConstants;
 import javax.wsdl.WSDLException;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -38,12 +41,14 @@ public class WSDLParser {
             response = request.getResponse();
         }
         if (response == null){
+            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Can't Read Response", "Error", JOptionPane.ERROR_MESSAGE);
             return -1;
         }
 
         IResponseInfo responseInfo = helpers.analyzeResponse(response);
 
         if (!responseInfo.getStatedMimeType().contains("XML")){
+            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Not a WSDL", "Error", JOptionPane.ERROR_MESSAGE);
             return -2;
 
         }
@@ -54,6 +59,7 @@ public class WSDLParser {
 
         File temp = createTempFile(body);
         if (temp == null) {
+            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Not a WSDL", "Error", JOptionPane.ERROR_MESSAGE);
             return -2;
         }
 
@@ -73,6 +79,25 @@ public class WSDLParser {
         try {
             parser = Wsdl.parse(temp.toURI().toString());
         } catch (Exception e){
+            StringBuilder sb = new StringBuilder();
+            sb.append(e.getMessage());
+            sb.append("\n");
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append(ste.toString());
+                sb.append("\n");
+            }
+            JTextArea jta = new JTextArea(sb.toString());
+            jta.setWrapStyleWord(true);
+            jta.setLineWrap(true);
+            jta.setEditable(false);
+            JScrollPane jsp = new JScrollPane(jta,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER){
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(480, 320);
+                }
+            };
+            JOptionPane.showMessageDialog(
+                    tab.getUiComponent().getParent(), jsp, "Error", JOptionPane.ERROR_MESSAGE);
             return -3;
         }
         if (!temp.delete()){
@@ -84,6 +109,20 @@ public class WSDLParser {
         try {
             bindings = parser.getBindings();
         } catch (Exception e){
+            StringBuilder sb = new StringBuilder();
+            sb.append(e.getMessage());
+            sb.append("\n");
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append(ste.toString());
+                sb.append("\n");
+            }
+            JTextArea jta = new JTextArea(sb.toString(),6,40);
+            jta.setWrapStyleWord(true);
+            jta.setLineWrap(true);
+            jta.setEditable(false);
+            JScrollPane jsp = new JScrollPane(jta,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            JOptionPane.showMessageDialog(
+                    tab.getUiComponent().getParent(), jsp, "Error", JOptionPane.ERROR_MESSAGE);
             return -2;
         }
         SoapBuilder builder;
