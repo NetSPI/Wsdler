@@ -16,6 +16,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -77,7 +79,8 @@ public class WSDLParser {
         }
         Wsdl parser;
         try {
-            parser = Wsdl.parse(temp.toURI().toString());
+            URLConnection a = new URL(url.toString()).openConnection();
+            parser = Wsdl.parse(url.toString());
         } catch (Exception e){
             StringBuilder sb = new StringBuilder();
             sb.append(e.getMessage());
