@@ -43,7 +43,7 @@ public class Menu implements IContextMenuFactory {
 
 
             public void mouseReleased(MouseEvent e) {
-                WSDLParser parser = new WSDLParser(helpers, tab);
+                WSDLParser parser = new WSDLParser(callbacks,helpers, tab);
                 try {
                     new Worker(parser,invocation, tab, callbacks).execute();
                 } catch (Exception e1) {

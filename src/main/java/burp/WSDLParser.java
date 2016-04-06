@@ -19,18 +19,21 @@ import java.util.concurrent.ExecutionException;
 
 public class WSDLParser {
 
-    private IExtensionHelpers helpers;
+    public static IExtensionHelpers helpers;
+    public static IBurpExtenderCallbacks callbacks;
+    public static IHttpRequestResponse httpRequestResponse;
     private WSDLParserTab tab;
     public static List<String> headers;
 
-    public WSDLParser(IExtensionHelpers helpers, WSDLParserTab tab) {
-        this.helpers = helpers;
+    public WSDLParser(IBurpExtenderCallbacks callbacks, IExtensionHelpers helpers, WSDLParserTab tab) {
+        WSDLParser.helpers = helpers;
         this.tab = tab;
+        WSDLParser.callbacks = callbacks;
 
     }
 
     public int parseWSDL(IHttpRequestResponse requestResponse, IBurpExtenderCallbacks callbacks) throws ParserConfigurationException, IOException, SAXException, WSDLException, ExecutionException, InterruptedException {
-
+        httpRequestResponse = requestResponse;
         byte[] response = requestResponse.getResponse();
 
         if (response == null){

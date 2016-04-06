@@ -10,6 +10,8 @@ import java.util.*;
 import javax.xml.namespace.*;
 import javax.xml.parsers.*;
 
+import burp.IHttpRequestResponse;
+import burp.IResponseInfo;
 import burp.WSDLParser;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLModel;
 import org.w3c.dom.*;
@@ -41,13 +43,13 @@ public class WSDLReaderImpl implements WSDLReader
 {
   // Used for determining the style of operations.
   private static final List STYLE_ONE_WAY =
-    Arrays.asList(new String[]{Constants.ELEM_INPUT});
+    Arrays.asList(Constants.ELEM_INPUT);
   private static final List STYLE_REQUEST_RESPONSE =
-    Arrays.asList(new String[]{Constants.ELEM_INPUT, Constants.ELEM_OUTPUT});
+    Arrays.asList(Constants.ELEM_INPUT, Constants.ELEM_OUTPUT);
   private static final List STYLE_SOLICIT_RESPONSE =
-    Arrays.asList(new String[]{Constants.ELEM_OUTPUT, Constants.ELEM_INPUT});
+    Arrays.asList(Constants.ELEM_OUTPUT, Constants.ELEM_INPUT);
   private static final List STYLE_NOTIFICATION =
-    Arrays.asList(new String[]{Constants.ELEM_OUTPUT});
+    Arrays.asList(Constants.ELEM_OUTPUT);
 
   protected boolean verbose = true;
   protected boolean importDocuments = true;
@@ -412,17 +414,13 @@ public class WSDLReaderImpl implements WSDLReader
 
               if (importedDef == null)
               {
-                URLConnection connection = new URL(url.toString()).openConnection();
-                for(Iterator<String> i = WSDLParser.headers.iterator(); i.hasNext(); ) {
-                  String item = i.next();
-                  if (item.contains(":") && !item.contains("Accept-Encoding:")) {
-                    String headerName = item.split(":")[0];
-                    String headerValue = item.split(":")[1];
-                    connection.setRequestProperty(headerName, headerValue);
-                  }
-                }
-                connection.connect();
-                inputStream = connection.getInputStream();
+                  byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+                  IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
+                  byte[] response = httpRequestResponse.getResponse();
+                  IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
+                  int bodyOffset = responseInfo.getBodyOffset();
+                  String body = new String(response, bodyOffset, response.length - bodyOffset);
+                  inputStream = new ByteArrayInputStream(body.getBytes());
 
                 //inputStream = StringUtils.getContentAsInputStream(url);
 
@@ -817,17 +815,13 @@ public class WSDLReaderImpl implements WSDLReader
   	  	    if (referencedSchema == null)
   	  	    {
   	  	      // We haven't read this schema in before so do it now
-              URLConnection connection = new URL(url.toString()).openConnection();
-              for(Iterator<String> i = WSDLParser.headers.iterator(); i.hasNext(); ) {
-                String item = i.next();
-                if (item.contains(":") && !item.contains("Accept-Encoding:")) {
-                  String headerName = item.split(":")[0];
-                  String headerValue = item.split(":")[1];
-                  connection.setRequestProperty(headerName, headerValue);
-                }
-              }
-              connection.connect();
-              inputStream = connection.getInputStream();
+                byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+                IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
+                byte[] response = httpRequestResponse.getResponse();
+                IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
+                int bodyOffset = responseInfo.getBodyOffset();
+                String body = new String(response, bodyOffset, response.length - bodyOffset);
+                inputStream = new ByteArrayInputStream(body.getBytes());
 
   	  	      if (inputStream != null)
   	  	      {
@@ -2292,17 +2286,13 @@ public class WSDLReaderImpl implements WSDLReader
                        ? StringUtils.getURL(null, contextURI)
                        : null;
       URL url = StringUtils.getURL(contextURL, wsdlURI);
-      URLConnection connection = new URL(url.toString()).openConnection();
-      for(Iterator<String> i = WSDLParser.headers.iterator(); i.hasNext(); ) {
-        String item = i.next();
-        if (item.contains(":") && !item.contains("Accept-Encoding:")) {
-          String headerName = item.split(":")[0];
-          String headerValue = item.split(":")[1];
-          connection.setRequestProperty(headerName, headerValue);
-        }
-      }
-      connection.connect();
-      InputStream inputStream = connection.getInputStream();
+      byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+      IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
+      byte[] response = httpRequestResponse.getResponse();
+      IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
+      int bodyOffset = responseInfo.getBodyOffset();
+      String body = new String(response, bodyOffset, response.length - bodyOffset);
+      InputStream inputStream = new ByteArrayInputStream(body.getBytes());
       InputSource inputSource = new InputSource(inputStream);
       inputSource.setSystemId(url.toString());
       Document doc = getDocument(inputSource, url.toString());
