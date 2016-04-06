@@ -7,17 +7,12 @@ import org.reficio.ws.builder.core.Wsdl;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
-import javax.swing.ScrollPaneConstants;
 import javax.wsdl.WSDLException;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -26,6 +21,7 @@ public class WSDLParser {
 
     private IExtensionHelpers helpers;
     private WSDLParserTab tab;
+    public static List<String> headers;
 
     public WSDLParser(IExtensionHelpers helpers, WSDLParserTab tab) {
         this.helpers = helpers;
@@ -55,17 +51,8 @@ public class WSDLParser {
 
         }
 
-        int bodyOffset = responseInfo.getBodyOffset();
-
-        String body = new String(response, bodyOffset, response.length - bodyOffset);
-
-        File temp = createTempFile(body);
-        if (temp == null) {
-            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Not a WSDL", "Error", JOptionPane.ERROR_MESSAGE);
-            return -2;
-        }
-
         IRequestInfo request = helpers.analyzeRequest(requestResponse);
+        headers = request.getHeaders();
 
         String url = request.getUrl().toString();
 
@@ -79,8 +66,7 @@ public class WSDLParser {
         }
         Wsdl parser;
         try {
-            URLConnection a = new URL(url.toString()).openConnection();
-            parser = Wsdl.parse(url.toString());
+            parser = Wsdl.parse(url);
         } catch (Exception e){
             StringBuilder sb = new StringBuilder();
             sb.append(e.getMessage());
@@ -102,9 +88,6 @@ public class WSDLParser {
             JOptionPane.showMessageDialog(
                     tab.getUiComponent().getParent(), jsp, "Error", JOptionPane.ERROR_MESSAGE);
             return -3;
-        }
-        if (!temp.delete()){
-            System.out.println("Can't delete temp file");
         }
 
         WSDLTab wsdltab = tab.createTab(requestName);
@@ -158,30 +141,12 @@ public class WSDLParser {
         return 0;
     }
 
-    private File createTempFile(String body) {
-        File temp = null;
-        if (!body.contains("definitions")) {
-            return null;
-        }
-        try {
-            temp = File.createTempFile("temp", ".wsdl");
-            BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
-
-            bw.write(body);
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return temp;
-    }
-
     private byte[] createRequest(IHttpRequestResponse requestResponse, SoapBuilder builder, SoapOperation operation) {
         SoapContext context = SoapContext.builder()
                 .alwaysBuildHeaders(true).exampleContent(true).typeComments(true).buildOptional(true).build();
         String message = builder.buildInputMessage(operation, context);
         String host = getHost(builder.getServiceUrls().get(0));
         String endpointURL = getEndPoint(builder.getServiceUrls().get(0), host);
-
         List<String> headers;
 
         headers = helpers.analyzeRequest(requestResponse).getHeaders();
@@ -199,8 +164,10 @@ public class WSDLParser {
                 iter.remove();
             }
         }
+        headers.add("SOAPAction: " + operation.getOperationName());
         headers.add("Content-Type: text/xml;charset=UTF-8");
         headers.add("Host: " + host);
+
 
         return helpers.buildHttpMessage(headers, message.getBytes());
     }

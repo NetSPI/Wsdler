@@ -243,7 +243,7 @@ class SchemaUtils {
             options.setErrorListener(errorList);
             options.setSaveSyntheticDocumentElement(new QName(Constants.XSD_NS, "schema"));
             XmlObject xmlObject;
-            if(wsdlUrl.contains("wsdl")){
+            if(wsdlUrl.toLowerCase().contains("wsdl")){
                 xmlObject = XmlObject.Factory.parse(new URL(wsdlUrl), options);
             } else {
                 xmlObject = SchemaDocument.Factory.parse(new URL(wsdlUrl), options);
