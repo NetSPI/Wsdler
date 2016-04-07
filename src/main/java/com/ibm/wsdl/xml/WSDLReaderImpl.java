@@ -414,7 +414,7 @@ public class WSDLReaderImpl implements WSDLReader
 
               if (importedDef == null)
               {
-                  byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+                  byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
                   IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
                   byte[] response = httpRequestResponse.getResponse();
                   IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
@@ -815,7 +815,7 @@ public class WSDLReaderImpl implements WSDLReader
   	  	    if (referencedSchema == null)
   	  	    {
   	  	      // We haven't read this schema in before so do it now
-                byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+                byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
                 IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
                 byte[] response = httpRequestResponse.getResponse();
                 IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
@@ -2286,7 +2286,8 @@ public class WSDLReaderImpl implements WSDLReader
                        ? StringUtils.getURL(null, contextURI)
                        : null;
       URL url = StringUtils.getURL(contextURL, wsdlURI);
-      byte[] request = WSDLParser.helpers.buildHttpRequest(url);
+
+      byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
       IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
       byte[] response = httpRequestResponse.getResponse();
       IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
