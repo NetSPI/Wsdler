@@ -11,6 +11,7 @@ import javax.xml.namespace.*;
 import javax.xml.parsers.*;
 
 import burp.IHttpRequestResponse;
+import burp.IRequestInfo;
 import burp.IResponseInfo;
 import burp.WSDLParser;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLModel;
@@ -414,7 +415,13 @@ public class WSDLReaderImpl implements WSDLReader
 
               if (importedDef == null)
               {
-                  byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
+                  List<String> headers = WSDLParser.headers;
+                  byte[] getRequest = WSDLParser.helpers.buildHttpRequest(url);
+                  IRequestInfo getRequestInfo =  WSDLParser.helpers.analyzeRequest(getRequest);
+                  List<String> getRequestInfoHeaders = getRequestInfo.getHeaders();
+                  headers.set(0,getRequestInfoHeaders.get(0));
+
+                  byte[] request = WSDLParser.helpers.buildHttpMessage(headers,new byte[]{});
                   IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
                   byte[] response = httpRequestResponse.getResponse();
                   IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
@@ -814,8 +821,13 @@ public class WSDLReaderImpl implements WSDLReader
 
   	  	    if (referencedSchema == null)
   	  	    {
-  	  	      // We haven't read this schema in before so do it now
-                byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
+                List<String> headers = WSDLParser.headers;
+                byte[] getRequest = WSDLParser.helpers.buildHttpRequest(url);
+                IRequestInfo getRequestInfo =  WSDLParser.helpers.analyzeRequest(getRequest);
+                List<String> getRequestInfoHeaders = getRequestInfo.getHeaders();
+                headers.set(0,getRequestInfoHeaders.get(0));
+
+                byte[] request = WSDLParser.helpers.buildHttpMessage(headers,new byte[]{});
                 IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
                 byte[] response = httpRequestResponse.getResponse();
                 IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
@@ -2287,7 +2299,14 @@ public class WSDLReaderImpl implements WSDLReader
                        : null;
       URL url = StringUtils.getURL(contextURL, wsdlURI);
 
-      byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
+        List<String> headers = WSDLParser.headers;
+        byte[] getRequest = WSDLParser.helpers.buildHttpRequest(url);
+        IRequestInfo getRequestInfo =  WSDLParser.helpers.analyzeRequest(getRequest);
+        List<String> getRequestInfoHeaders = getRequestInfo.getHeaders();
+        headers.set(0,getRequestInfoHeaders.get(0));
+
+        byte[] request = WSDLParser.helpers.buildHttpMessage(headers,new byte[]{});
+
       IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
       byte[] response = httpRequestResponse.getResponse();
       IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);

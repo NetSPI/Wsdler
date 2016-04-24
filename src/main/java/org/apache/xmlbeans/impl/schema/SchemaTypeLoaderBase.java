@@ -16,6 +16,7 @@
 package org.apache.xmlbeans.impl.schema;
 
 import burp.IHttpRequestResponse;
+import burp.IRequestInfo;
 import burp.IResponseInfo;
 import burp.WSDLParser;
 import org.apache.xmlbeans.impl.common.QNameHelper;
@@ -280,8 +281,13 @@ public abstract class SchemaTypeLoaderBase implements SchemaTypeLoader
             int count = 0;
 
             if (url.toString().contains("http")){
+                List<String> headers = WSDLParser.headers;
+                byte[] getRequest = WSDLParser.helpers.buildHttpRequest(url);
+                IRequestInfo getRequestInfo =  WSDLParser.helpers.analyzeRequest(getRequest);
+                List<String> getRequestInfoHeaders = getRequestInfo.getHeaders();
+                headers.set(0,getRequestInfoHeaders.get(0));
 
-                byte[] request = WSDLParser.helpers.buildHttpMessage(WSDLParser.headers,new byte[]{});
+                byte[] request = WSDLParser.helpers.buildHttpMessage(headers,new byte[]{});
                 IHttpRequestResponse httpRequestResponse =  WSDLParser.callbacks.makeHttpRequest(WSDLParser.httpRequestResponse.getHttpService(),request);
                 byte[] response = httpRequestResponse.getResponse();
                 IResponseInfo responseInfo = WSDLParser.helpers.analyzeResponse(response);
