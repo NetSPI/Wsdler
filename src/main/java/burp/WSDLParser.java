@@ -48,12 +48,6 @@ public class WSDLParser {
 
         IResponseInfo responseInfo = helpers.analyzeResponse(response);
 
-        if (!responseInfo.getStatedMimeType().contains("XML")){
-            JOptionPane.showMessageDialog(tab.getUiComponent().getParent(), "Not a WSDL", "Error", JOptionPane.ERROR_MESSAGE);
-            return -2;
-
-        }
-
         IRequestInfo request = helpers.analyzeRequest(requestResponse);
         headers = request.getHeaders();
 
