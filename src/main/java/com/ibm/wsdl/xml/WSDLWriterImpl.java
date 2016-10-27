@@ -6,6 +6,7 @@ package com.ibm.wsdl.xml;
 
 import java.io.*;
 import java.util.*;
+import javax.xml.XMLConstants;
 import javax.xml.namespace.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -1004,7 +1005,8 @@ public class WSDLWriterImpl implements WSDLWriter
                                       String desc) throws WSDLException
   {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
     factory.setNamespaceAware(true);
     factory.setValidating(false);
 

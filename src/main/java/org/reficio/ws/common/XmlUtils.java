@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -83,6 +84,8 @@ public final class XmlUtils {
         StringReader reader = new StringReader(xmlString);
         InputSource src = new InputSource(reader);
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+        dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document dom = db.parse(src);
@@ -138,6 +141,8 @@ public final class XmlUtils {
     public static String normalizeAndRemoveValues(String xmlContent) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             dbf.setNamespaceAware(true);
             dbf.setCoalescing(true);
             dbf.setIgnoringElementContentWhitespace(true);

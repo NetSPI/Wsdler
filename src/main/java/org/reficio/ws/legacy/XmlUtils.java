@@ -29,6 +29,7 @@ import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -276,6 +277,8 @@ final class XmlUtils {
         if (documentBuilder == null) {
             try {
                 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+                dbf.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
                 dbf.setNamespaceAware(true);
                 documentBuilder = dbf.newDocumentBuilder();
             } catch (ParserConfigurationException e) {
