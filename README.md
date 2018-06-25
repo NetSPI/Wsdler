@@ -3,7 +3,7 @@ Wsdler
 
 WSDL Parser extension for Burp
 
-###How to Run###
+## How to Run ##
 
 1. Download and install from the Burp App store.
 
